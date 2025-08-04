@@ -30,7 +30,7 @@ export const AnalyzeResume = () => {
   const generateAIContent = async () => {
     setLoading(true);
     try {
-      const genAI = new GoogleGenerativeAI("AIzaSyCCYWQ6nd576YV9nsthq2fy0xn7OlEu39o");
+      const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       const prompt = `
