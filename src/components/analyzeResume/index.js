@@ -30,6 +30,13 @@ export const AnalyzeResume = () => {
   const generateAIContent = async () => {
     setLoading(true);
     try {
+      // TODO: Add API key to environment variables when ready
+      if (!process.env.GOOGLE_API_KEY) {
+        setAiContent("Google API key not configured. Please add GOOGLE_API_KEY to your environment variables to enable AI analysis.");
+        setLoading(false);
+        return;
+      }
+      
       const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
