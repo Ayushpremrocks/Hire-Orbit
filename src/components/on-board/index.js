@@ -17,6 +17,12 @@ const supabaseClient = createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ubG1oeXVjY2J2cHljdnV2anVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjIwNzYxNTgsImV4cCI6MjAzNzY1MjE1OH0.TeyfCG82cBw2y63q9j_7nklEto8djOVC5zx2TDEpDrU"
 );
 
+// Check if Clerk is configured
+const isClerkConfigured = Boolean(
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && 
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY !== 'REPLACE_WITH_YOUR_CLERK_PUBLISHABLE_KEY'
+);
+
 export default function OnBoard() {
   const [currentTab, setCurrentTab] = useState("candidate");
   const [recruiterFormData, setRecruiterFormData] = useState(
@@ -28,7 +34,8 @@ export default function OnBoard() {
 
   const [file, setFile] = useState(null);
 
-  const currentAuthUser = useUser();
+  // Conditionally use Clerk hook
+  const currentAuthUser = isClerkConfigured ? useUser() : { user: null };
   const { user } = currentAuthUser;
 
   function handleFileChange(event) {

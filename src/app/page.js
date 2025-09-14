@@ -1,14 +1,14 @@
 import { fetchProfileAction } from "@/actions";
 import HomepageButtonControls from "@/components/homepage-button-controls";
-import { currentUser } from "@clerk/nextjs/server";
+import { getCurrentUserSafe } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import TypingAnimation from "@/components/magicui/typing-animation";
 import { IconCloud } from "@/components/magicui/icon-cloud";
 
 async function Home() {
-  const user = await currentUser();
-  const profileInfo = await fetchProfileAction(user?.id);
+  const user = await getCurrentUserSafe();
+  const profileInfo = user ? await fetchProfileAction(user?.id) : null;
 
   if (user && !profileInfo?._id) redirect("/onboard");
 

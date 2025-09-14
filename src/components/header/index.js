@@ -9,6 +9,13 @@ import { UserButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import GradualSpacing from "@/components/magicui/gradual-spacing";
 
+// Check if Clerk is available
+const isClerkConfigured = Boolean(
+  typeof window !== 'undefined' && 
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && 
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY !== 'REPLACE_WITH_YOUR_CLERK_PUBLISHABLE_KEY'
+);
+
 
 export default function Header({ user, profileInfo }) {
   const { theme, setTheme } = useTheme();
@@ -125,7 +132,7 @@ export default function Header({ user, profileInfo }) {
             fill={theme === "dark" ? "light" : "dark"}
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
           />
-          <UserButton className="z-50" afterSignOutUrl="/" />
+          {isClerkConfigured && <UserButton className="z-50" afterSignOutUrl="/" />}
         </nav>
       </header>
     </div>

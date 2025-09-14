@@ -12,6 +12,12 @@ import CommonForm from "../common-form";
 import { updateProfileAction } from "@/actions";
 import { UserButton } from "@clerk/nextjs";
 
+// Check if Clerk is configured
+const isClerkConfigured = Boolean(
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && 
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY !== 'REPLACE_WITH_YOUR_CLERK_PUBLISHABLE_KEY'
+);
+
 function AccountInfo({ profileInfo }) {
   const [candidateFormData, setCandidateFormData] = useState(
     initialCandidateAccountFormData
@@ -71,8 +77,7 @@ function AccountInfo({ profileInfo }) {
         <h1 className="lg:text-4xl text-3xl font-bold dark:text-white tracking-tight text-gray-950">
           Account Details
         </h1>
-        <UserButton className="z-50" afterSignOutUrl="/" />
-
+        {isClerkConfigured && <UserButton className="z-50" afterSignOutUrl="/" />}
       </div>
       <div className=" pb-10 pt-0">
         <div className="container mx-auto p-0 space-y-8">

@@ -1,12 +1,12 @@
-import { currentUser } from "@clerk/nextjs/server";
+import { getCurrentUserSafe } from "@/utils/auth";
 import Header from "../header";
 import { fetchProfileAction } from "@/actions";
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 export default async function CommonLayout({ children,...props }) {
-  const user = await currentUser();
-  const profileInfo = await fetchProfileAction(user?.id);
+  const user = await getCurrentUserSafe();
+  const profileInfo = user ? await fetchProfileAction(user?.id) : null;
   // console.log(user)
   return (
     <NextThemesProvider {...props}>

@@ -1,15 +1,15 @@
 import { fetchProfileAction } from "@/actions";
 import OnBoard from "@/components/on-board";
-import { currentUser } from "@clerk/nextjs/server";
+import { getCurrentUserSafe } from "@/utils/auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function OnBoardPage() {
   //get the auth user from clerk
-  const user = await currentUser();
+  const user = await getCurrentUserSafe();
 
   // fetch the profile info -> either user is candidate/ user is recruiter
-  const profileInfo = await fetchProfileAction(user?.id);
+  const profileInfo = user ? await fetchProfileAction(user?.id) : null;
 
   if (profileInfo?._id) {
     if (profileInfo?.role === "recruiter" && !profileInfo.isPremiumUser)
