@@ -1,1 +1,14 @@
-"node_modules/\n.next/\n.env.local" 
+node_modules/
+.next/
+.DS_Store
+dist/
+out/
+
+# Env files (never commit secrets)
+.env
+.env.*.local
+.env.local
+.env.production
+.env.development
+.env.test
+.vercel

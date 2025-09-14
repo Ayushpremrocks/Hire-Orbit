@@ -150,6 +150,27 @@ The platform's standout feature uses Google Gemini AI to:
 ### Database Setup
 Configure your MongoDB connection string in the environment variables.
 
+### Environment Variables
+
+This project uses environment variables for secrets and configuration. Do not commit real secrets.
+
+1. Copy `.env.example` to `.env.local`:
+   ```bash
+   # Windows (PowerShell)
+   Copy-Item .env.example .env.local
+   # or CMD
+   copy .env.example .env.local
+   ```
+2. Fill in the values in `.env.local`:
+   - `URL` – Base app URL (http://localhost:3000 for local)
+   - `MONGODB_URL` – MongoDB connection string
+   - `STRIPE_SECRET_KEY` – Stripe Secret Key
+   - `GOOGLE_API_KEY` – Google Generative AI (Gemini) API key
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` – Clerk publishable key
+   - `CLERK_SECRET_KEY` – Clerk secret key
+
+Git is configured to ignore `.env*` files. Share `.env.example` only.
+
 ## 📝 Usage
 
 1. **For Candidates:**
